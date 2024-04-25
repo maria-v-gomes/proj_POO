@@ -9,7 +9,11 @@ public class Casa extends Financiamento {
 
     //override
     public double CalcularPagamentoMensal() {
-        return super.CalcularPagamentoMensal() + 80;
+        // Calcaular o pagamento
+        double pagamentomensalOriginal = super.CalcularPagamentoMensal();
+
+        //Adicinando o valor adicional de R$80
+        return pagamentomensalOriginal + 80;
 
     }
 

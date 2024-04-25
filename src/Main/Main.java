@@ -1,5 +1,8 @@
 package Main;
 
+import Modelo.Casa;
+import Modelo.Apartamento;
+import Modelo.Terreno;
 import Modelo.Financiamento;
 import Util.InterfaceUsuario;
 import java.util.ArrayList;
@@ -11,34 +14,57 @@ public class Main {
         InterfaceUsuario interfaceUsuario = new InterfaceUsuario();
         ArrayList<Financiamento> financiamentos = new ArrayList<>();
 
-        //Adicionar os quatro financiamentos ao Arraylist
-        for (int i = 1; i <= 4; i++) {
-            double TaxaJuros = interfaceUsuario.SolicitarTaxaAnual();
-            int PrazoFinanciamentoemAnos = interfaceUsuario.SolicitarPrazoFinanciamento();
-            double ValorImovel = interfaceUsuario.SolicitarValorImovel();
+        // Solicitar os dados do usuário para o financiamento de casa
+        double taxaJurosCasa = interfaceUsuario.SolicitarTaxaAnual();
+        int prazoCasa = interfaceUsuario.SolicitarPrazoFinanciamento();
+        double valorCasa = interfaceUsuario.SolicitarValorImovel();
+        Casa casa1 = new Casa(valorCasa, prazoCasa, taxaJurosCasa);
+        financiamentos.add(casa1);
 
+        // Financiamento direto no código
+        Casa casa2 = new Casa(150000, 20, 8.5);
+        financiamentos.add(casa2);
 
-            Financiamento NovoFinanciamento = new Financiamento(ValorImovel, PrazoFinanciamentoemAnos, TaxaJuros);
-            financiamentos.add(NovoFinanciamento);
-        }
+        // Financiamento Apartamentos
+        Apartamento apartamento1 = new Apartamento(200000, 15, 7.0);
+        financiamentos.add(apartamento1);
+        Apartamento apartamento2 = new Apartamento(180000, 10, 6.5);
+        financiamentos.add(apartamento2);
+
+        // Financiamento Terreno
+        Terreno terreno = new Terreno(120000, 5, 10.0);
+        financiamentos.add(terreno);
+
         //  Calcula o valor total de todos os imoveis e todos os financiamentos
         double totalImoveis = 0;
         double totalFinanciamentos = 0;
 
-        for (Financiamento financimento : financiamentos) {
-            totalImoveis += financimento.getValorImovel();
-            totalFinanciamentos += financimento.CalcularTotaldoPagamento();
+        for (Financiamento financiamento : financiamentos) {
+            totalImoveis += financiamento.getValorImovel();
+            totalFinanciamentos += financiamento.CalcularTotaldoPagamento();
         }
 
-        //Mostrar os resultados
+        // Mostrar os resultados
         System.out.println("Detalhes dos financiamentos:");
         for (int i = 0; i < financiamentos.size(); i++) {
-            System.out.println("Financiamento" + (i + 1) + " - valor do imóvel: R$" + financiamentos.get(i).getValorImovel()
-                    + ", valor do financiamento: R$ " + financiamentos.get(i).CalcularTotaldoPagamento());
+            Financiamento financiamento = financiamentos.get(i);
+            String tipoImovel = "";
 
+            if (financiamento instanceof Casa) {
+                tipoImovel = "Casa";
+            } else if (financiamento instanceof Apartamento) {
+                tipoImovel = "Apartamento";
+            } else if (financiamento instanceof Terreno) {
+                tipoImovel = "Terreno";
+            } else {
+                tipoImovel = "Imóvel";
+            }
+
+            System.out.println("Financiamento " + (i + 1) + " -tipo: " + tipoImovel + ", valor do imóvel: R$" + financiamento.getValorImovel()
+                    + ", valor do financiamento: R$ " + financiamento.CalcularTotaldoPagamento());
         }
 
         System.out.println("Total dos imóveis: R$ " + totalImoveis);
-        System.out.println("Total dos financiamentos: R$ " + totalFinanciamentos);
+        System.out.println("Total dos financimentos: R$ " + totalFinanciamentos);
     }
 }

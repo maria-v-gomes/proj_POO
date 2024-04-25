@@ -10,8 +10,16 @@ public class Apartamento extends Financiamento {
     //override
     public double CalcularPagamentoMensal() {
         //Calcular a taxa mensal
+        double taxaMensal = (getTaxaJurosAnual() / 12) / 100;
+
         //Calcular o financiamento em meses
-        return 0;
+        int prazoEmMeses = getPrazoFinaciamento() * 12;
+
+        // Calcular o pagamento mensal com a fórmula da amortização PRICE
+        double pagamentoMensal = (getValorImovel() * taxaMensal) / (1 - Math.pow(1 + taxaMensal, - prazoEmMeses));
+
+        return pagamentoMensal;
+
 
     }
 }
