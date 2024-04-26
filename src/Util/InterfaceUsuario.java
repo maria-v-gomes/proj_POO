@@ -41,4 +41,14 @@ public class InterfaceUsuario {
         } while (TaxaAnual <= 0);
         return TaxaAnual;
     }
+
+    public double SolicitarAreaConstruida() {
+        System.out.println("Digite a área construída (em metros quadrados): ");
+        return scanner.nextDouble();
+    }
+
+    public double SolicitarAreaTerreno() {
+        System.out.println("Digite a área do terreno (em metros quadrados): ");
+        return scanner.nextDouble();
+    }
 }

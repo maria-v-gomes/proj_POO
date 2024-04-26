@@ -18,21 +18,23 @@ public class Main {
         double taxaJurosCasa = interfaceUsuario.SolicitarTaxaAnual();
         int prazoCasa = interfaceUsuario.SolicitarPrazoFinanciamento();
         double valorCasa = interfaceUsuario.SolicitarValorImovel();
-        Casa casa1 = new Casa(valorCasa, prazoCasa, taxaJurosCasa);
+        double areaConstruidaCasa = interfaceUsuario.SolicitarAreaConstruida();
+        double areaTerrenoCasa = interfaceUsuario.SolicitarAreaTerreno();
+        Casa casa1 = new Casa(valorCasa, prazoCasa, taxaJurosCasa, areaConstruidaCasa, areaTerrenoCasa);
         financiamentos.add(casa1);
 
         // Financiamento direto no código
-        Casa casa2 = new Casa(150000, 20, 8.5);
+        Casa casa2 = new Casa(150000, 20, 8.5, 200, 300);
         financiamentos.add(casa2);
 
         // Financiamento Apartamentos
-        Apartamento apartamento1 = new Apartamento(200000, 15, 7.0);
+        Apartamento apartamento1 = new Apartamento(200000, 15, 7.0, 2,6);
         financiamentos.add(apartamento1);
-        Apartamento apartamento2 = new Apartamento(180000, 10, 6.5);
+        Apartamento apartamento2 = new Apartamento(180000, 10, 6.5,1,3);
         financiamentos.add(apartamento2);
 
         // Financiamento Terreno
-        Terreno terreno = new Terreno(120000, 5, 10.0);
+        Terreno terreno = new Terreno(120000, 5, 10.0,"Residencial");
         financiamentos.add(terreno);
 
         //  Calcula o valor total de todos os imoveis e todos os financiamentos
