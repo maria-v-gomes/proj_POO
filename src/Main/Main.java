@@ -15,11 +15,11 @@ public class Main {
         ArrayList<Financiamento> financiamentos = new ArrayList<>();
 
         // Solicitar os dados do usuário para o financiamento de casa
-        double taxaJurosCasa = interfaceUsuario.SolicitarTaxaAnual();
-        int prazoCasa = interfaceUsuario.SolicitarPrazoFinanciamento();
-        double valorCasa = interfaceUsuario.SolicitarValorImovel();
-        double areaConstruidaCasa = interfaceUsuario.SolicitarAreaConstruida();
-        double areaTerrenoCasa = interfaceUsuario.SolicitarAreaTerreno();
+        double taxaJurosCasa = interfaceUsuario.solicitarTaxaAnual();
+        int prazoCasa = interfaceUsuario.solicitarPrazoFinanciamento();
+        double valorCasa = interfaceUsuario.solicitarValorImovel();
+        double areaConstruidaCasa = interfaceUsuario.solicitarAreaConstruida();
+        double areaTerrenoCasa = interfaceUsuario.solicitarAreaTerreno();
         Casa casa1 = new Casa(valorCasa, prazoCasa, taxaJurosCasa, areaConstruidaCasa, areaTerrenoCasa);
         financiamentos.add(casa1);
 
@@ -67,6 +67,6 @@ public class Main {
         }
 
         System.out.println("Total dos imóveis: R$ " + totalImoveis);
-        System.out.println("Total dos financimentos: R$ " + totalFinanciamentos);
+        System.out.println("Total dos financiamentos: R$ " + totalFinanciamentos);
     }
 }

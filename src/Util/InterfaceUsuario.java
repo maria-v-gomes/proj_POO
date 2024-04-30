@@ -1,54 +1,88 @@
 package Util;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+class ValorInvalidoException extends Exception {
+    public ValorInvalidoException(String msg) {
+        super(msg);
+    }
+}
+
 public class InterfaceUsuario {
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
-    //Métodos
-    public double SolicitarValorImovel() {
-        double ValorImovel;
-        do {
-            System.out.println("Digite o valor do imóvel: ");
-            ValorImovel = scanner.nextDouble();
-            if (ValorImovel <= 0) {
-                System.out.println("Valor do Imóvel inválido. Por favor ");
+    private double solicitarDouble(String mensagem) {
+        while (true) {
+            try {
+                System.out.println(mensagem);
+                return scanner.nextDouble();
+            } catch (Exception e) {
+                System.out.println("Entrada inválida. Digite um número válido.");
+                scanner.next();
             }
-        } while (ValorImovel <= 0);
-        return ValorImovel;
+        }
     }
 
-    public int SolicitarPrazoFinanciamento() {
-        int PrazoFinanciamento;
-        do {
-            System.out.println("Digite o prazo do financiamento em ANOS: ");
-            PrazoFinanciamento = scanner.nextInt();
-            if (PrazoFinanciamento <= 0) {
-                System.out.println("Prazo do Financimento inválido. Por favor digite um valor positivo");
+    private int solicitarInt(String mensagem) {
+        while (true) {
+            try {
+                System.out.println(mensagem);
+                return scanner.nextInt();
+            } catch (Exception e) {
+                System.out.println("Entrada inválida. Digite um valor válido.");
+                scanner.next();
             }
-        }while (PrazoFinanciamento <= 0);
-        return PrazoFinanciamento;
+        }
     }
 
-    public double SolicitarTaxaAnual() {
-        double TaxaAnual;
-        do {
-            System.out.println("Digite a taxa de juros anual");
-            TaxaAnual = scanner.nextDouble();
-            if (TaxaAnual <= 0) {
-                System.out.println("Taxa de juros anual inválida. Por favor digite um valor positivo");
+    public double solicitarValorImovel() {
+        while (true) {
+            try {
+                double valorImovel = solicitarDouble("Digite o valor do Imóvel:");
+                if (valorImovel <= 0) {
+                    throw new ValorInvalidoException("Valor do imóvel inválido. Digite um valor válido.");
+                }
+                return valorImovel;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
-        } while (TaxaAnual <= 0);
-        return TaxaAnual;
+        }
     }
 
-    public double SolicitarAreaConstruida() {
-        System.out.println("Digite a área construída (em metros quadrados): ");
-        return scanner.nextDouble();
+    public int solicitarPrazoFinanciamento() {
+        while (true) {
+            try {
+                int prazoFinanciamento = solicitarInt("Digite o prazo do financiamento:");
+                if (prazoFinanciamento <= 0) {
+                    throw new ValorInvalidoException("Prazo do financiamento inválido. Digite um valor válido.");
+                }
+                return prazoFinanciamento;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
-    public double SolicitarAreaTerreno() {
-        System.out.println("Digite a área do terreno (em metros quadrados): ");
-        return scanner.nextDouble();
+    public double solicitarTaxaAnual() {
+        while (true) {
+            try {
+                double taxaAnual = solicitarDouble("Digite a taxa de juros anual:");
+                if (taxaAnual <= 0) {
+                    throw new ValorInvalidoException("Taxa de juros inválida. Digite um valor válido.");
+                }
+                return taxaAnual;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public double solicitarAreaConstruida() {
+        return solicitarDouble("Digite a área construída (em metros quadrados):");
+    }
+
+    public double solicitarAreaTerreno() {
+        return solicitarDouble("Digite a área do terreno (em metros quadrados):");
     }
 }
