@@ -6,6 +6,7 @@ import Modelo.Terreno;
 import Modelo.Financiamento;
 import Util.InterfaceUsuario;
 import java.util.ArrayList;
+import Modelo.FinanciamentoFileManager;
 
 public class Main {
     public static void main(String[] args) {
@@ -50,23 +51,41 @@ public class Main {
         System.out.println("Detalhes dos financiamentos:");
         for (int i = 0; i < financiamentos.size(); i++) {
             Financiamento financiamento = financiamentos.get(i);
-            String tipoImovel = "";
+
+            System.out.println("\nFinanciamento " + (i + 1) + ":");
 
             if (financiamento instanceof Casa) {
-                tipoImovel = "Casa";
+                System.out.println("Tipo: Casa");
+                System.out.println("Área Construída: " + ((Casa) financiamento).getAreaConstruida() + "m²");
+                System.out.println("Área do Terreno: " + ((Casa) financiamento).getAreaTerreno() + "m²");
             } else if (financiamento instanceof Apartamento) {
-                tipoImovel = "Apartamento";
+                System.out.println("Tipo: Apartamento");
+                System.out.println("Número do Andar: " + ((Apartamento) financiamento).getNumeroAndar());
+                System.out.println("Número de Vagas na Garagem: " + ((Apartamento) financiamento).getNumeroVagasGaragem());
             } else if (financiamento instanceof Terreno) {
-                tipoImovel = "Terreno";
+                System.out.println("Tipo: Terreno");
+                System.out.println("Tipo de Zona: " + ((Terreno) financiamento).getTipoZona());
             } else {
-                tipoImovel = "Imóvel";
+                System.out.println("Tipo: Imóvel");
             }
 
-            System.out.println("Financiamento " + (i + 1) + " -tipo: " + tipoImovel + ", valor do imóvel: R$" + financiamento.getValorImovel()
-                    + ", valor do financiamento: R$ " + financiamento.CalcularTotaldoPagamento());
+            System.out.println("Valor do imóvel: R$" + String.format("%.2f", financiamento.getValorImovel()));
+            System.out.println("Valor do financiamento: R$ " + String.format("%.2f", financiamento.CalcularTotaldoPagamento()));
         }
 
-        System.out.println("Total dos imóveis: R$ " + totalImoveis);
-        System.out.println("Total dos financiamentos: R$ " + totalFinanciamentos);
+        System.out.println("Total dos imóveis: R$ " + String.format("%.2f", totalImoveis));
+        System.out.println("Total dos financiamentos: R$ " + String.format("%.2f", totalFinanciamentos));
+
+        // Salvar a lista de financiamentos em um arquivo
+        String filename = "financiamentos.ser";
+        FinanciamentoFileManager.salvarArrayList(financiamentos, filename);
+
+        // Carregar a lista de financiamentos do arquivo
+        ArrayList<Financiamento> financiamentosCarregados = FinanciamentoFileManager.carregarArrayList(filename);
+
+        // Verificar se os dados foram salvos corretamente
+        // Isso irá imprimir true se os dados foram salvos e carregados corretamente
+        System.out.println(financiamentos.equals(financiamentosCarregados));
+
     }
 }

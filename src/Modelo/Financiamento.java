@@ -1,10 +1,17 @@
 package Modelo;
 
-public abstract class Financiamento {
+import java.io.Serializable;
+
+public abstract class Financiamento implements Serializable {
     // Atributos
     protected double ValorImovel;
     protected int PrazoFinaciamento;
     protected double TaxaJurosAnual;
+
+    // Construtor vazio
+    public Financiamento() {
+
+    }
 
     // Construtor
     public Financiamento(double valorDesejadoImovel, int PrazoFinaciamentoemAnos, double TaxaJurosAnual) {
@@ -26,8 +33,11 @@ public abstract class Financiamento {
         return TaxaJurosAnual;
     }
 
-
     //Métodos
+    public String toFileString() {
+        return String.format("%f,%d,%f", ValorImovel, PrazoFinaciamento, TaxaJurosAnual);
+    }
+
     //Mudar esse para abstrato
     public abstract double CalcularPagamentoMensal();
 
@@ -43,3 +53,5 @@ public abstract class Financiamento {
         System.out.println("Valor total do Financiamento: " + this.CalcularTotaldoPagamento());
     }
 }
+
+

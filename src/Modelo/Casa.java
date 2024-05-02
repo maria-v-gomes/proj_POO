@@ -1,4 +1,6 @@
 package Modelo;
+import java.io.Serializable;
+import java.util.Objects;
 
 // Classe de exceção personalizada
 class DescontoMaiorDoQueJurosException extends Exception {
@@ -7,16 +9,46 @@ class DescontoMaiorDoQueJurosException extends Exception {
     }
 }
 
-public class Casa extends Financiamento {
+public class Casa extends Financiamento implements Serializable {
 
     private double areaConstruida;
     private double areaTerreno;
+
+    // Construtor vazio
+    public Casa() {
+
+    }
 
     // Construtor
     public Casa(double valorDesejadoImovel, int PrazoFinaciamentoemAnos, double TaxaJurosAnual, double areaConstruida, double areaTerreno) {
         super(valorDesejadoImovel, PrazoFinaciamentoemAnos, TaxaJurosAnual);
         this.areaConstruida = areaConstruida;
         this.areaTerreno = areaTerreno;
+    }
+
+    // Método para converter um objeto Casa em uma string para salvar no arquivo
+    @Override
+    public String toFileString() {
+        return String.format("%s,%f,%f", super.toFileString(), areaConstruida, areaTerreno);
+    }
+
+    public static Casa fromFileString(String line) {
+        String[] parts = line.split(",");
+        double valorImovel = Double.parseDouble(parts[0]);
+        int prazoFinanciamento = Integer.parseInt(parts[1]);
+        double taxaJurosAnual = Double.parseDouble(parts[2]);
+        double areaConstruida = Double.parseDouble(parts[3]);
+        double areaTerreno = Double.parseDouble(parts[4]);
+        return new Casa(valorImovel, prazoFinanciamento, taxaJurosAnual, areaConstruida, areaTerreno);
+    }
+
+    //métodos
+    public double getAreaConstruida() {
+        return areaConstruida;
+    }
+
+    public double getAreaTerreno() {
+        return areaTerreno;
     }
 
     // Override do método CalcularPagamentoMensal
@@ -59,5 +91,26 @@ public class Casa extends Financiamento {
         System.out.println("Área Construída: " + areaConstruida);
         System.out.println("Área do Terreno: " + areaTerreno);
         System.out.println("Valor total do Financiamento: " + CalcularTotaldoPagamento());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Casa casa = (Casa) obj;
+        return Double.compare(casa.ValorImovel, ValorImovel) == 0 &&
+                PrazoFinaciamento == casa.PrazoFinaciamento &&
+                Double.compare(casa.TaxaJurosAnual, TaxaJurosAnual) == 0 &&
+                Double.compare(casa.areaConstruida, areaConstruida) == 0 &&
+                Double.compare(casa.areaTerreno, areaTerreno) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ValorImovel, PrazoFinaciamento, TaxaJurosAnual, areaConstruida, areaTerreno);
     }
 }
